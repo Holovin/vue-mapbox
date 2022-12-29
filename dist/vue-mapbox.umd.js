@@ -1,4 +1,4 @@
-(function(global, factory) {
+(function (global, factory) {
   typeof exports === "object" && typeof module !== "undefined"
     ? factory(
         exports,
@@ -6,11 +6,14 @@
         require("@babel/runtime/helpers/typeof")
       )
     : typeof define === "function" && define.amd
-    ? define([
-        "exports",
-        "@babel/runtime/helpers/defineProperty",
-        "@babel/runtime/helpers/typeof"
-      ], factory)
+    ? define(
+        [
+          "exports",
+          "@babel/runtime/helpers/defineProperty",
+          "@babel/runtime/helpers/typeof"
+        ],
+        factory
+      )
     : ((global =
         typeof globalThis !== "undefined" ? globalThis : global || self),
       factory(
@@ -18,16 +21,15 @@
         global._defineProperty,
         global._typeof
       ));
-})(this, function(exports, _defineProperty, _typeof) {
+})(this, function (exports, _defineProperty, _typeof) {
   "use strict";
 
   function _interopDefaultLegacy(e) {
     return e && typeof e === "object" && "default" in e ? e : { default: e };
   }
 
-  var _defineProperty__default = /*#__PURE__*/ _interopDefaultLegacy(
-    _defineProperty
-  );
+  var _defineProperty__default =
+    /*#__PURE__*/ _interopDefaultLegacy(_defineProperty);
   var _typeof__default = /*#__PURE__*/ _interopDefaultLegacy(_typeof);
 
   function ownKeys(object, enumerableOnly) {
@@ -35,19 +37,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys(Object(source), true).forEach(function(key) {
+        ownKeys(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -56,7 +57,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys(Object(source)).forEach(function(key) {
+        ownKeys(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -67,7 +68,6 @@
     }
     return target;
   }
-
   var withEventsMixin = {
     methods: {
       /**
@@ -92,7 +92,6 @@
           )
         );
       },
-
       /**
        * Emit Vue event with Mapbox event as additional data
        *
@@ -117,6 +116,7 @@
   };
 
   /* eslint-disable key-spacing */
+
   var mapEvents = {
     resize: {
       name: "resize"
@@ -480,39 +480,33 @@
       this.map.setLigh(next);
     }
   };
-
   function watcher(prop, callback, next, prev) {
     var _this = this;
-
     if (this.initial) return;
-
     if (this.$listeners["update:".concat(prop)]) {
       if (this.propsIsUpdating[prop]) {
         this._watcher.active = false;
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           _this._watcher.active = true;
         });
       } else {
         this._watcher.active = true;
         callback(next, prev);
       }
-
       this.propsIsUpdating[prop] = false;
     } else {
       callback(next, prev);
     }
   }
-
   function makeWatchers() {
     var wrappers = {};
-    Object.entries(watchers).forEach(function(prop) {
-      wrappers[prop[0]] = function(next, prev) {
+    Object.entries(watchers).forEach(function (prop) {
+      wrappers[prop[0]] = function (next, prev) {
         return watcher.call(this, prop[0], prop[1].bind(this), next, prev);
       };
     });
     return wrappers;
   }
-
   var withWatchers = {
     watch: makeWatchers()
   };
@@ -522,19 +516,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$1(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$1(Object(source), true).forEach(function(key) {
+        ownKeys$1(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -543,7 +536,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$1(Object(source)).forEach(function(key) {
+        ownKeys$1(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -554,7 +547,6 @@
     }
     return target;
   }
-
   var withPrivateMethods = {
     methods: {
       $_updateSyncedPropsFabric: function $_updateSyncedPropsFabric(
@@ -562,8 +554,7 @@
         data
       ) {
         var _this = this;
-
-        return function() {
+        return function () {
           _this.propsIsUpdating[prop] = true;
           var info = typeof data === "function" ? data() : data;
           return _this.$emit("update:".concat(prop), info);
@@ -571,7 +562,6 @@
       },
       $_bindPropsUpdateEvents: function $_bindPropsUpdateEvents() {
         var _this2 = this;
-
         var syncedProps = [
           {
             events: ["moveend"],
@@ -598,20 +588,18 @@
             prop: "bounds",
             getter: function getter() {
               var newBounds = _this2.map.getBounds();
-
               if (_this2.$props.bounds instanceof Array) {
                 newBounds = newBounds.toArray();
               }
-
               return newBounds;
             }
           }
         ];
-        syncedProps.forEach(function(_ref) {
+        syncedProps.forEach(function (_ref) {
           var events = _ref.events,
             prop = _ref.prop,
             getter = _ref.getter;
-          events.forEach(function(event) {
+          events.forEach(function (event) {
             if (_this2.$listeners["update:".concat(prop)]) {
               _this2.map.on(
                 event,
@@ -623,10 +611,9 @@
       },
       $_loadMap: function $_loadMap() {
         var _this3 = this;
-
-        return this.mapboxPromise.then(function(mapbox) {
+        return this.mapboxPromise.then(function (mapbox) {
           _this3.mapbox = mapbox.default ? mapbox.default : mapbox;
-          return new Promise(function(resolve) {
+          return new Promise(function (resolve) {
             if (_this3.accessToken)
               _this3.mapbox.accessToken = _this3.accessToken;
             var map = new _this3.mapbox.Map(
@@ -639,7 +626,7 @@
                 }
               )
             );
-            map.on("load", function() {
+            map.on("load", function () {
               return resolve(map);
             });
           });
@@ -653,8 +640,7 @@
       },
       $_bindMapEvents: function $_bindMapEvents(events) {
         var _this4 = this;
-
-        Object.keys(this.$listeners).forEach(function(eventName) {
+        Object.keys(this.$listeners).forEach(function (eventName) {
           if (events.includes(eventName)) {
             _this4.map.on(eventName, _this4.$_emitMapEvent);
           }
@@ -662,8 +648,7 @@
       },
       $_unbindEvents: function $_unbindEvents(events) {
         var _this5 = this;
-
-        events.forEach(function(eventName) {
+        events.forEach(function (eventName) {
           _this5.map.off(eventName, _this5.$_emitMapEvent);
         });
       }
@@ -675,19 +660,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$2(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$2(Object(source), true).forEach(function(key) {
+        ownKeys$2(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -696,7 +680,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$2(Object(source)).forEach(function(key) {
+        ownKeys$2(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -707,7 +691,6 @@
     }
     return target;
   }
-
   var composedMethodEvents = [
     {
       name: "moveend",
@@ -744,7 +727,6 @@
       }
     }
   ];
-
   var composedMethodGetter = function composedMethodGetter(map) {
     return {
       center: map.getCenter(),
@@ -753,7 +735,6 @@
       pitch: map.getPitch()
     };
   };
-
   var composedMethodConfig = {
     events: composedMethodEvents,
     getter: composedMethodGetter
@@ -894,39 +875,37 @@
     easeTo: composedMethodConfig,
     flyTo: composedMethodConfig
   };
-
   function generateEventId(methodName) {
     return ""
       .concat(methodName, "-")
       .concat(("" + Math.random()).split(".")[1]);
   }
-
   function catchEventFabric(map, eventName, eventId, resolve) {
     var catchEvent = function catchEvent(event) {
       if (event.type !== eventName || event.eventId !== eventId) {
         return;
       }
-
       map.off(eventName, catchEvent);
       resolve(event);
     };
-
     return catchEvent;
   }
-
   function promisifyMethod(map, methodName) {
     var method = map[methodName];
     var argsCount = method.length;
-    return function() {
+    return function () {
       var handlers = [];
       var eventData = {
         eventId: generateEventId(methodName)
-      }; // Creating list of events and event listeners
-
-      var catchers = methodsData[methodName].events.map(function(event, index) {
+      };
+      // Creating list of events and event listeners
+      var catchers = methodsData[methodName].events.map(function (
+        event,
+        index
+      ) {
         return {
           event: event,
-          func: new Promise(function(resolve, reject) {
+          func: new Promise(function (resolve, reject) {
             handlers[index] = {
               event: event,
               func: catchEventFabric(
@@ -940,8 +919,8 @@
           })
         };
       });
-      var argsArray = []; // Creating list of arguments.
-
+      var argsArray = [];
+      // Creating list of arguments.
       for (var i = 0; i < argsCount; i++) {
         if (i === argsCount - 1) {
           // If args[i] is last argument, we assume that this is eventData argument,
@@ -959,34 +938,31 @@
           );
         }
       }
-
       var funcs = [];
       var options = (arguments.length <= 0 ? undefined : arguments[0]) || {};
-
       try {
-        method.apply(map, argsArray); // Filter catchers.
+        method.apply(map, argsArray);
+        // Filter catchers.
         // If map state is not changes (e.g. zoomTo(1) don't produce any events if map already on zoom 1),
         // just return resolved promise
         // .fitBounds() and .fitScreenCoordinates() needs special processing due to different number of arguments
-
         if (methodName === "fitBounds") {
           // args[0] is bounding box, options is args[1], but we don't need them to calculate events to listen
           options = {};
         }
-
         if (methodName === "fitScreenCoordinates") {
           options = {
             bearing: null
           };
-          options.bearing = null; // bearing can be passed by user as optional argument
-
+          options.bearing = null;
+          // bearing can be passed by user as optional argument
           if (
             typeof (arguments.length <= 2 ? undefined : arguments[2]) ===
             "number"
           ) {
             options.bearing = arguments.length <= 2 ? undefined : arguments[2];
-          } // pass bearing merged with other options
-
+          }
+          // pass bearing merged with other options
           if (
             (arguments.length <= 3 ? undefined : arguments[3]) &&
             _typeof__default["default"](
@@ -999,11 +975,9 @@
             );
           }
         }
-
-        funcs = catchers.map(function(_ref) {
+        funcs = catchers.map(function (_ref) {
           var event = _ref.event,
             func = _ref.func;
-
           if (event.check(map, options)) {
             return func;
           } else {
@@ -1012,35 +986,31 @@
           }
         });
       } catch (err) {
-        handlers.forEach(function(_ref2) {
+        handlers.forEach(function (_ref2) {
           var event = _ref2.event,
             func = _ref2.func;
           map.off(event.name, func);
         });
         throw err;
       }
-
-      return Promise.all(funcs).then(function() {
+      return Promise.all(funcs).then(function () {
         return methodsData[methodName].getter(map);
       });
     };
   }
-
   function promisifyMap(map) {
     var toPromisify = Object.keys(methodsData);
     var actions = {};
-    toPromisify.forEach(function(key) {
+    toPromisify.forEach(function (key) {
       if (toPromisify.indexOf(key) !== -1) {
         actions[key] = promisifyMethod(map, key);
       }
     });
     return actions;
   }
-
   function promisify(map) {
     var methodName =
       arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-
     if (methodName) {
       return promisifyMethod(map, methodName);
     } else {
@@ -1053,19 +1023,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$3(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$3(Object(source), true).forEach(function(key) {
+        ownKeys$3(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -1074,7 +1043,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$3(Object(source)).forEach(function(key) {
+        ownKeys$3(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -1097,7 +1066,6 @@
           {
             stop: function stop() {
               var _this = this;
-
               this.map.stop();
               var updatedProps = {
                 pitch: this.map.getPitch(),
@@ -1105,7 +1073,7 @@
                 bearing: this.map.getBearing(),
                 center: this.map.getCenter()
               };
-              Object.entries(updatedProps).forEach(function(prop) {
+              Object.entries(updatedProps).forEach(function (prop) {
                 _this.$_updateSyncedPropsFabric(prop[0], prop[1])();
               });
               return Promise.resolve(updatedProps);
@@ -1121,19 +1089,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$4(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$4(Object(source), true).forEach(function(key) {
+        ownKeys$4(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -1142,7 +1109,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$4(Object(source)).forEach(function(key) {
+        ownKeys$4(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -1176,11 +1143,9 @@
         get mapbox() {
           return self.mapbox;
         },
-
         get map() {
           return self.map;
         },
-
         get actions() {
           return self.actions;
         }
@@ -1228,10 +1193,8 @@
     },
     mounted: function mounted() {
       var _this = this;
-
-      this.$_loadMap().then(function(map) {
+      this.$_loadMap().then(function (map) {
         _this.map = map;
-
         if (
           _this.RTLTextPluginUrl !== undefined &&
           _this.mapbox.getRTLTextPluginStatus() !== "loaded"
@@ -1241,18 +1204,12 @@
             _this.$_RTLTextPluginError
           );
         }
-
         var eventNames = Object.keys(mapEvents);
-
         _this.$_bindMapEvents(eventNames);
-
         _this.$_registerAsyncActions(map);
-
         _this.$_bindPropsUpdateEvents();
-
         _this.initial = false;
         _this.initialized = true;
-
         _this.$emit("load", {
           map: map,
           component: _this
@@ -1261,8 +1218,7 @@
     },
     beforeDestroy: function beforeDestroy() {
       var _this2 = this;
-
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         if (_this2.map) _this2.map.remove();
       });
     },
@@ -1273,7 +1229,6 @@
           ref: "container"
         });
       }
-
       return h(
         "div",
         {
@@ -1289,19 +1244,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$5(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$5(Object(source), true).forEach(function(key) {
+        ownKeys$5(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -1310,7 +1264,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$5(Object(source)).forEach(function(key) {
+        ownKeys$5(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -1321,7 +1275,6 @@
     }
     return target;
   }
-
   var withSelfEventsMixin = {
     methods: {
       $_emitSelfEvent: function $_emitSelfEvent(event) {
@@ -1339,15 +1292,13 @@
           )
         );
       },
-
       /** Bind events for markers, popups and controls.
        * MapboxGL JS emits this events on popup or marker object,
        * so we treat them as 'self' events of these objects
        */
       $_bindSelfEvents: function $_bindSelfEvents(events, emitter) {
         var _this = this;
-
-        Object.keys(this.$listeners).forEach(function(eventName) {
+        Object.keys(this.$listeners).forEach(function (eventName) {
           if (events.includes(eventName)) {
             emitter.on(eventName, _this.$_emitSelfEvent);
           }
@@ -1355,10 +1306,9 @@
       },
       $_unbindSelfEvents: function $_unbindSelfEvents(events, emitter) {
         var _this2 = this;
-
         if (events.length === 0) return;
         if (!emitter) return;
-        events.forEach(function(eventName) {
+        events.forEach(function (eventName) {
           emitter.off(eventName, _this2.$_emitSelfEvent);
         });
       }
@@ -1389,7 +1339,6 @@
           });
           return;
         }
-
         this.$_emitEvent("added", {
           control: this.control
         });
@@ -1536,19 +1485,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$6(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$6(Object(source), true).forEach(function(key) {
+        ownKeys$6(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -1557,7 +1505,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$6(Object(source)).forEach(function(key) {
+        ownKeys$6(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -1632,19 +1580,14 @@
     },
     mounted: function mounted() {
       var _this = this;
-
       var markerOptions = _objectSpread$6({}, this.$props);
-
       if (this.$slots.marker) {
         markerOptions.element = this.$slots.marker[0].elm;
       }
-
       this.marker = new this.mapbox.Marker(markerOptions);
-
       if (this.$listeners["update:coordinates"]) {
-        this.marker.on("dragend", function(event) {
+        this.marker.on("dragend", function (event) {
           var newCoordinates;
-
           if (_this.coordinates instanceof Array) {
             newCoordinates = [
               event.target._lngLat.lng,
@@ -1653,11 +1596,9 @@
           } else {
             newCoordinates = event.target._lngLat;
           }
-
           _this.$emit("update:coordinates", newCoordinates);
         });
       }
-
       var eventNames = Object.keys(markerEvents);
       this.$_bindSelfEvents(eventNames, this.marker);
       this.initial = false;
@@ -1683,10 +1624,9 @@
       },
       $_bindMarkerDOMEvents: function $_bindMarkerDOMEvents() {
         var _this2 = this;
-
-        Object.keys(this.$listeners).forEach(function(key) {
+        Object.keys(this.$listeners).forEach(function (key) {
           if (Object.values(markerDOMEvents).includes(key)) {
-            _this2.marker._element.addEventListener(key, function(event) {
+            _this2.marker._element.addEventListener(key, function (event) {
               _this2.$_emitSelfEvent(event);
             });
           }
@@ -1717,11 +1657,11 @@
     open: "open",
     close: "close"
   };
+
   /**
    * Popup component.
    * @see See [Mapbox Gl JS Popup](https://www.mapbox.com/mapbox-gl-js/api/#popup)
    */
-
   var Popup = {
     name: "Popup",
     mixins: [withEventsMixin, withSelfEventsMixin],
@@ -1745,7 +1685,6 @@
         type: Boolean,
         default: true
       },
-
       /**
        * Mapbox GL popup option.
        * If `true`, the popup will closed when the map is clicked. .
@@ -1754,7 +1693,6 @@
         type: Boolean,
         default: true
       },
-
       /**
        * Mapbox GL popup option.
        * A string indicating the popup's location relative to the coordinate set.
@@ -1777,7 +1715,6 @@
         },
         default: undefined
       },
-
       /**
        * Mapbox GL popup option.
        * A pixel offset applied to the popup's location
@@ -1794,7 +1731,6 @@
       coordinates: {
         type: Array
       },
-
       /**
        * Component option.
        * If `true`, popup treats data in deafult slot as plain text
@@ -1820,7 +1756,6 @@
           if (this.popup !== undefined) {
             return this.popup.isOpen();
           }
-
           return false;
         },
         set: function set(value) {
@@ -1842,7 +1777,6 @@
       showed: function showed(next, prev) {
         if (next !== prev) {
           this.open = next;
-
           if (this.marker) {
             this.marker.togglePopup();
           }
@@ -1865,11 +1799,9 @@
     methods: {
       $_addPopup: function $_addPopup() {
         this.popup = new this.mapbox.Popup(this.$props);
-
         if (this.coordinates !== undefined) {
           this.popup.setLngLat(this.coordinates);
         }
-
         if (this.$slots.default !== undefined) {
           if (this.onlyText) {
             if (this.$slots.default[0].elm.nodeType === 3) {
@@ -1883,19 +1815,15 @@
             this.popup.setDOMContent(this.$slots.default[0].elm);
           }
         }
-
         this.$_bindSelfEvents(Object.keys(popupEvents), this.popup);
         this.$_emitEvent("added", {
           popup: this.popup
         });
-
         if (this.marker) {
           this.marker.setPopup(this.popup);
         }
-
         if (this.showed) {
           this.open = true;
-
           if (this.marker) {
             this.marker.togglePopup();
           }
@@ -1947,19 +1875,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$7(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$7(Object(source), true).forEach(function(key) {
+        ownKeys$7(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -1968,7 +1895,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$7(Object(source)).forEach(function(key) {
+        ownKeys$7(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -2045,25 +1972,22 @@
     },
     created: function created() {
       if (this.layer.minzoom) {
-        this.$watch("layer.minzoom", function(next) {
+        this.$watch("layer.minzoom", function (next) {
           if (this.initial) return;
           this.map.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
         });
       }
-
       if (this.layer.maxzoom) {
-        this.$watch("layer.maxzoom", function(next) {
+        this.$watch("layer.maxzoom", function (next) {
           if (this.initial) return;
           this.map.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
         });
       }
-
       if (this.layer.paint) {
         this.$watch(
           "layer.paint",
-          function(next) {
+          function (next) {
             if (this.initial) return;
-
             if (next) {
               for (
                 var _i = 0, _Object$keys = Object.keys(next);
@@ -2080,13 +2004,11 @@
           }
         );
       }
-
       if (this.layer.layout) {
         this.$watch(
           "layer.layout",
-          function(next) {
+          function (next) {
             if (this.initial) return;
-
             if (next) {
               for (
                 var _i2 = 0, _Object$keys2 = Object.keys(next);
@@ -2103,11 +2025,10 @@
           }
         );
       }
-
       if (this.layer.filter) {
         this.$watch(
           "layer.filter",
-          function(next) {
+          function (next) {
             if (this.initial) return;
             this.map.setFilter(this.layerId, next);
           },
@@ -2127,7 +2048,6 @@
             error: err
           });
         }
-
         if (this.clearSource) {
           try {
             this.map.removeSource(this.sourceId);
@@ -2148,8 +2068,7 @@
       },
       $_bindLayerEvents: function $_bindLayerEvents(events) {
         var _this = this;
-
-        Object.keys(this.$listeners).forEach(function(eventName) {
+        Object.keys(this.$listeners).forEach(function (eventName) {
           if (events.includes(eventName)) {
             _this.map.on(eventName, _this.layerId, _this.$_emitLayerMapEvent);
           }
@@ -2157,9 +2076,8 @@
       },
       $_unbindEvents: function $_unbindEvents(events) {
         var _this2 = this;
-
         if (this.map) {
-          events.forEach(function(eventName) {
+          events.forEach(function (eventName) {
             _this2.map.off(
               eventName,
               _this2.layerId,
@@ -2200,19 +2118,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$8(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$8(Object(source), true).forEach(function(key) {
+        ownKeys$8(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -2221,7 +2138,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$8(Object(source)).forEach(function(key) {
+        ownKeys$8(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -2238,47 +2155,41 @@
     computed: {
       getSourceFeatures: function getSourceFeatures() {
         var _this = this;
-
-        return function(filter) {
+        return function (filter) {
           if (_this.map) {
             return _this.map.querySourceFeatures(_this.sourceId, {
               filter: filter
             });
           }
-
           return null;
         };
       },
       getRenderedFeatures: function getRenderedFeatures() {
         var _this2 = this;
-
-        return function(geometry, filter) {
+        return function (geometry, filter) {
           if (_this2.map) {
             return _this2.map.queryRenderedFeatures(geometry, {
               layers: [_this2.layerId],
               filter: filter
             });
           }
-
           return null;
         };
       },
       getClusterExpansionZoom: function getClusterExpansionZoom() {
         var _this3 = this;
-
-        return function(clusterId) {
-          return new Promise(function(resolve, reject) {
+        return function (clusterId) {
+          return new Promise(function (resolve, reject) {
             if (_this3.mapSource) {
-              _this3.mapSource.getClusterExpansionZoom(clusterId, function(
-                err,
-                zoom
-              ) {
-                if (err) {
-                  return reject(err);
+              _this3.mapSource.getClusterExpansionZoom(
+                clusterId,
+                function (err, zoom) {
+                  if (err) {
+                    return reject(err);
+                  }
+                  return resolve(zoom);
                 }
-
-                return resolve(zoom);
-              });
+              );
             } else {
               return reject(
                 new Error(
@@ -2291,17 +2202,14 @@
       },
       getClusterChildren: function getClusterChildren() {
         var _this4 = this;
-
-        return function(clusterId) {
-          return new Promise(function(resolve, reject) {
+        return function (clusterId) {
+          return new Promise(function (resolve, reject) {
             var source = _this4.mapSource;
-
             if (source) {
-              source.getClusterChildren(clusterId, function(err, features) {
+              source.getClusterChildren(clusterId, function (err, features) {
                 if (err) {
                   return reject(err);
                 }
-
                 return resolve(features);
               });
             } else {
@@ -2316,8 +2224,7 @@
       },
       getClusterLeaves: function getClusterLeaves() {
         var _this5 = this;
-
-        return function() {
+        return function () {
           for (
             var _len = arguments.length, args = new Array(_len), _key = 0;
             _key < _len;
@@ -2325,19 +2232,16 @@
           ) {
             args[_key] = arguments[_key];
           }
-
-          return new Promise(function(resolve, reject) {
+          return new Promise(function (resolve, reject) {
             if (_this5.mapSource) {
               var _this5$mapSource;
-
               (_this5$mapSource = _this5.mapSource).getClusterLeaves.apply(
                 _this5$mapSource,
                 args.concat([
-                  function(err, features) {
+                  function (err, features) {
                     if (err) {
                       return reject(err);
                     }
-
                     return resolve(features);
                   }
                 ])
@@ -2357,7 +2261,7 @@
       if (this.source) {
         this.$watch(
           "source.data",
-          function(next) {
+          function (next) {
             if (this.initial) return;
             this.mapSource.setData(next);
           },
@@ -2366,14 +2270,12 @@
           }
         );
       }
-
       this.$_deferredMount();
     },
     methods: {
       $_deferredMount: function $_deferredMount() {
         // this.map = payload.map;
         this.map.on("dataloading", this.$_watchSourceLoading);
-
         if (this.source) {
           var source = _objectSpread$8(
             {
@@ -2381,7 +2283,6 @@
             },
             this.source
           );
-
           try {
             this.map.addSource(this.sourceId, source);
           } catch (err) {
@@ -2391,7 +2292,6 @@
             }
           }
         }
-
         this.$_addLayer();
         this.$_bindLayerEvents(layerEvents);
         this.map.off("dataloading", this.$_watchSourceLoading);
@@ -2399,7 +2299,6 @@
       },
       $_addLayer: function $_addLayer() {
         var existed = this.map.getLayer(this.layerId);
-
         if (existed) {
           if (this.replace) {
             this.map.removeLayer(this.layerId);
@@ -2410,7 +2309,6 @@
             return existed;
           }
         }
-
         var layer = _objectSpread$8(
           {
             id: this.layerId,
@@ -2418,7 +2316,6 @@
           },
           this.layer
         );
-
         this.map.addLayer(layer, this.before);
         this.$_emitEvent("added", {
           layerId: this.layerId
@@ -2464,19 +2361,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$9(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$9(Object(source), true).forEach(function(key) {
+        ownKeys$9(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -2485,7 +2381,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$9(Object(source)).forEach(function(key) {
+        ownKeys$9(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -2504,9 +2400,8 @@
         if (this.source.coordinates) {
           this.$watch(
             "source.coordinates",
-            function(next) {
+            function (next) {
               if (this.initial) return;
-
               if (next) {
                 this.mapSource.setCoordinates(next);
               }
@@ -2516,13 +2411,11 @@
             }
           );
         }
-
         if (this.source.url) {
           this.$watch(
             "source.url",
-            function(next) {
+            function (next) {
               if (this.initial) return;
-
               if (next) {
                 this.mapSource.updateImage({
                   url: next,
@@ -2536,7 +2429,6 @@
           );
         }
       }
-
       this.$_deferredMount();
     },
     methods: {
@@ -2547,9 +2439,7 @@
           },
           this.source
         );
-
         this.map.on("dataloading", this.$_watchSourceLoading);
-
         try {
           this.map.addSource(this.sourceId, source);
         } catch (err) {
@@ -2558,14 +2448,12 @@
             this.map.addSource(this.sourceId, source);
           }
         }
-
         this.$_addLayer();
         this.$_bindLayerEvents(layerEvents);
         this.initial = false;
       },
       $_addLayer: function $_addLayer() {
         var existed = this.map.getLayer(this.layerId);
-
         if (existed) {
           if (this.replace) {
             this.map.removeLayer(this.layerId);
@@ -2576,7 +2464,6 @@
             return existed;
           }
         }
-
         var layer = _objectSpread$9(
           {
             id: this.layerId,
@@ -2585,7 +2472,6 @@
           },
           this.layer
         );
-
         this.map.addLayer(layer, this.before);
         this.$_emitEvent("added", {
           layerId: this.layerId
@@ -2599,19 +2485,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$a(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$a(Object(source), true).forEach(function(key) {
+        ownKeys$a(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -2620,7 +2505,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$a(Object(source)).forEach(function(key) {
+        ownKeys$a(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -2667,9 +2552,7 @@
           },
           this.source
         );
-
         this.map.on("dataloading", this.$_watchSourceLoading);
-
         try {
           this.map.addSource(this.sourceId, source);
         } catch (err) {
@@ -2678,14 +2561,12 @@
             this.map.addSource(this.sourceId, source);
           }
         }
-
         this.$_addLayer();
         this.$_bindLayerEvents(layerEvents);
         this.initial = false;
       },
       $_addLayer: function $_addLayer() {
         var existed = this.map.getLayer(this.layerId);
-
         if (existed) {
           if (this.replace) {
             this.map.removeLayer(this.layerId);
@@ -2696,7 +2577,6 @@
             return existed;
           }
         }
-
         var layer = _objectSpread$a(
           {
             id: this.layerId,
@@ -2705,7 +2585,6 @@
           },
           this.layer
         );
-
         this.map.addLayer(layer, this.before);
         this.$_emitEvent("added", {
           layerId: this.layerId,
@@ -2720,19 +2599,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$b(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$b(Object(source), true).forEach(function(key) {
+        ownKeys$b(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -2741,7 +2619,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$b(Object(source)).forEach(function(key) {
+        ownKeys$b(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -2762,12 +2640,11 @@
     },
     created: function created() {
       if (this.source && this.source.coordinates) {
-        this.$watch("source.coordinates", function(next) {
+        this.$watch("source.coordinates", function (next) {
           if (this.initial) return;
           this.mapSource.setCoordinates(next);
         });
       }
-
       this.$_deferredMount();
     },
     methods: {
@@ -2778,9 +2655,7 @@
           },
           this.source
         );
-
         this.map.on("dataloading", this.$_watchSourceLoading);
-
         try {
           this.map.addSource(this.sourceId, source);
         } catch (err) {
@@ -2789,14 +2664,12 @@
             this.map.addSource(this.sourceId, source);
           }
         }
-
         this.$_addLayer();
         this.$_bindLayerEvents(layerEvents);
         this.initial = false;
       },
       $_addLayer: function $_addLayer() {
         var existed = this.map.getLayer(this.layerId);
-
         if (existed) {
           if (this.replace) {
             this.map.removeLayer(this.layerId);
@@ -2807,7 +2680,6 @@
             return existed;
           }
         }
-
         var layer = _objectSpread$b(
           {
             id: this.layerId,
@@ -2816,7 +2688,6 @@
           },
           this.layer
         );
-
         this.map.addLayer(layer, this.before);
         this.$_emitEvent("added", {
           layerId: this.layerId
@@ -2830,19 +2701,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$c(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$c(Object(source), true).forEach(function(key) {
+        ownKeys$c(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -2851,7 +2721,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$c(Object(source)).forEach(function(key) {
+        ownKeys$c(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -2868,29 +2738,25 @@
     computed: {
       getSourceFeatures: function getSourceFeatures() {
         var _this = this;
-
-        return function(filter) {
+        return function (filter) {
           if (_this.map) {
             return _this.map.querySourceFeatures(_this.sourceId, {
               sourceLayer: _this.layer["source-layer"],
               filter: filter
             });
           }
-
           return null;
         };
       },
       getRenderedFeatures: function getRenderedFeatures() {
         var _this2 = this;
-
-        return function(geometry, filter) {
+        return function (geometry, filter) {
           if (_this2.map) {
             return _this2.map.queryRenderedFeatures(geometry, {
               layers: [_this2.layerId],
               filter: filter
             });
           }
-
           return null;
         };
       }
@@ -2912,9 +2778,7 @@
           },
           this.source
         );
-
         this.map.on("dataloading", this.$_watchSourceLoading);
-
         try {
           this.map.addSource(this.sourceId, source);
         } catch (err) {
@@ -2923,7 +2787,6 @@
             this.map.addSource(this.sourceId, source);
           }
         }
-
         this.$_addLayer();
         this.$_bindLayerEvents(layerEvents);
         this.map.off("dataloading", this.$_watchSourceLoading);
@@ -2931,7 +2794,6 @@
       },
       $_addLayer: function $_addLayer() {
         var existed = this.map.getLayer(this.layerId);
-
         if (existed) {
           if (this.replace) {
             this.map.removeLayer(this.layerId);
@@ -2942,7 +2804,6 @@
             return existed;
           }
         }
-
         var layer = _objectSpread$c(
           {
             id: this.layerId,
@@ -2950,7 +2811,6 @@
           },
           this.layer
         );
-
         this.map.addLayer(layer, this.before);
         this.$_emitEvent("added", {
           layerId: this.layerId
@@ -2984,19 +2844,18 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       keys.push.apply(keys, symbols);
     }
     return keys;
   }
-
   function _objectSpread$d(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys$d(Object(source), true).forEach(function(key) {
+        ownKeys$d(Object(source), true).forEach(function (key) {
           _defineProperty__default["default"](target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
@@ -3005,7 +2864,7 @@
           Object.getOwnPropertyDescriptors(source)
         );
       } else {
-        ownKeys$d(Object(source)).forEach(function(key) {
+        ownKeys$d(Object(source)).forEach(function (key) {
           Object.defineProperty(
             target,
             key,
@@ -3030,9 +2889,7 @@
           },
           this.source
         );
-
         this.map.on("dataloading", this.$_watchSourceLoading);
-
         try {
           this.map.addSource(this.sourceId, source);
         } catch (err) {
@@ -3041,7 +2898,6 @@
             this.map.addSource(this.sourceId, source);
           }
         }
-
         this.$_addLayer();
         this.$_bindLayerEvents(layerEvents);
         this.map.off("dataloading", this.$_watchSourceLoading);
@@ -3049,7 +2905,6 @@
       },
       $_addLayer: function $_addLayer() {
         var existed = this.map.getLayer(this.layerId);
-
         if (existed) {
           if (this.replace) {
             this.map.removeLayer(this.layerId);
@@ -3060,7 +2915,6 @@
             return existed;
           }
         }
-
         var layer = _objectSpread$d(
           {
             id: this.layerId,
@@ -3069,7 +2923,6 @@
           },
           this.layer
         );
-
         this.map.addLayer(layer, this.before);
         this.$_emitEvent("added", {
           layerId: this.layerId
