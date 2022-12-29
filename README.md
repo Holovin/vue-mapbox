@@ -1,4 +1,4 @@
-# VueMapbox [![Build Status](https://travis-ci.org/soal/vue-mapbox.svg?branch=master)](https://travis-ci.org/soal/vue-mapbox) [![npm version](https://badge.fury.io/js/vue-mapbox.svg)](https://badge.fury.io/js/vue-mapbox)
+# VueMapbox [![npm version](https://badge.fury.io/js/vue-mapbox-ho.svg)](https://badge.fury.io/js/vue-mapbox-ho)
 
 > Combine powers of [Vue.js](https://vuejs.org/) and [Mapbox Gl JS](https://mapbox.com/mapbox-gl-js)
 
@@ -9,10 +9,6 @@ Vue-mapbox is wrapper around Mapbox GL JS library that provides vueish-way to in
 ## Size
 
 ~ 15 kB minified and gzipped
-
-## Browser compatibility
-
-_Coming soon_
 
 ## Development
 
