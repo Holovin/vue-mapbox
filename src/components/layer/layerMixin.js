@@ -72,14 +72,14 @@ export default {
 
   created() {
     if (this.layer.minzoom) {
-      this.$watch("layer.minzoom", function(next) {
+      this.$watch("layer.minzoom", function (next) {
         if (this.initial) return;
         this.map.setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
       });
     }
 
     if (this.layer.maxzoom) {
-      this.$watch("layer.maxzoom", function(next) {
+      this.$watch("layer.maxzoom", function (next) {
         if (this.initial) return;
         this.map.setLayerZoomRange(this.layerId, this.layer.minzoom, next);
       });
@@ -88,7 +88,7 @@ export default {
     if (this.layer.paint) {
       this.$watch(
         "layer.paint",
-        function(next) {
+        function (next) {
           if (this.initial) return;
           if (next) {
             for (let prop of Object.keys(next)) {
@@ -103,7 +103,7 @@ export default {
     if (this.layer.layout) {
       this.$watch(
         "layer.layout",
-        function(next) {
+        function (next) {
           if (this.initial) return;
           if (next) {
             for (let prop of Object.keys(next)) {
@@ -118,7 +118,7 @@ export default {
     if (this.layer.filter) {
       this.$watch(
         "layer.filter",
-        function(next) {
+        function (next) {
           if (this.initial) return;
           this.map.setFilter(this.layerId, next);
         },
@@ -128,9 +128,11 @@ export default {
   },
 
   beforeDestroy() {
-    if (this.map && this.map.loaded()) {
+    if (this.map) {
       try {
-        this.map.removeLayer(this.layerId);
+        if (this.map.getLayer(this.layerId)) {
+          this.map.removeLayer(this.layerId);
+        }
       } catch (err) {
         this.$_emitEvent("layer-does-not-exist", {
           layerId: this.sourceId,
@@ -139,7 +141,9 @@ export default {
       }
       if (this.clearSource) {
         try {
-          this.map.removeSource(this.sourceId);
+          if (this.map.getSource(this.sourceId)) {
+            this.map.removeSource(this.sourceId);
+          }
         } catch (err) {
           this.$_emitEvent("source-does-not-exist", {
             sourceId: this.sourceId,

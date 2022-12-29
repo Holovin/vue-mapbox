@@ -2039,9 +2039,11 @@
       }
     },
     beforeDestroy: function beforeDestroy() {
-      if (this.map && this.map.loaded()) {
+      if (this.map) {
         try {
-          this.map.removeLayer(this.layerId);
+          if (this.map.getLayer(this.layerId)) {
+            this.map.removeLayer(this.layerId);
+          }
         } catch (err) {
           this.$_emitEvent("layer-does-not-exist", {
             layerId: this.sourceId,
@@ -2050,7 +2052,9 @@
         }
         if (this.clearSource) {
           try {
-            this.map.removeSource(this.sourceId);
+            if (this.map.getSource(this.sourceId)) {
+              this.map.removeSource(this.sourceId);
+            }
           } catch (err) {
             this.$_emitEvent("source-does-not-exist", {
               sourceId: this.sourceId,
